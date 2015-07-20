@@ -133,8 +133,8 @@ describe('Crowd user resource', () => {
 
     it('should allow checking group membership', (done) => {
       Promise.all([
-        assertAsync(crowd.user.groups.get(user.username, group1.groupname), () => {
-          assert.ok(true);
+        assertAsync(crowd.user.groups.get(user.username, group1.groupname), (res) => {
+          assert.equal(res, group1.groupname);
         }),
         assertAsync(crowd.user.groups.get(user.username, group3.groupname), () => {}).catch(() => {
           assert.ok(true);
