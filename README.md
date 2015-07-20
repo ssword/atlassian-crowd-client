@@ -27,5 +27,6 @@ A client library to communicate with an Atlassian Crowd server from Node, writte
 
 ## Development
 
+    cp test/helpers/settings-example.js test/helpers/settings.js
     npm install
     npm test
