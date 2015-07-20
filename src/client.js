@@ -8,10 +8,6 @@ export default class CrowdClient extends CrowdApi {
   constructor(settings) {
     super(settings);
 
-    this.config = {
-      cookie: () => this.request('GET', '/config/cookie')
-    };
-
     this.user = {
       get: (username, withAttributes = false) => {
         return this.request('GET', `/user?username=${username}${withAttributes ? '&expand=attributes' : ''}`)
@@ -203,6 +199,10 @@ export default class CrowdClient extends CrowdApi {
       removeAll: (username) => {
         return this.request('DELETE', `/session?username=${username}`);
       }
+    };
+
+    this.config = {
+      cookie: () => this.request('GET', '/config/cookie')
     };
   }
 }
