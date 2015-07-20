@@ -1,6 +1,6 @@
 # atlassian-crowd-client
 
-A client library to communicate with an Atlassian Crowd server from Node, written in ES6.
+Promise-based client library to communicate with an Atlassian Crowd server from Node, written in ES6.
 
 ## Installation
 
