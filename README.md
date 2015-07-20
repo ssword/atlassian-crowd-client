@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/atlassian-crowd-client.svg)](http://badge.fury.io/js/atlassian-crowd-client)
+
 # atlassian-crowd-client
 
 Promise-based client library to communicate with an Atlassian Crowd server from Node, written in ES6.
