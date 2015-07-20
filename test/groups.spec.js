@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { assertAsync } from './helpers/async';
+import { assertAsync } from './helpers/helpers';
 import settings from './helpers/settings';
 import Crowd from '../src/client';
 import Attributes from '../src/models/attributes';
@@ -217,7 +217,7 @@ describe('Crowd group resource', () => {
     });
   });
 
-  it.only('should allow fetching full details of all group memberships', (done) => {
+  it('should allow fetching full details of all group memberships', (done) => {
     assertAsync(crowd.group.membership(), () => {
       assert.ok(true);
     }).then(done).catch(done);

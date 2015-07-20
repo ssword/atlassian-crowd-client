@@ -154,5 +154,21 @@ export default class CrowdClient extends CrowdApi {
         return this.request('GET', '/group/membership');
       }
     };
+
+    this.authenticate = (username, password) => {
+      return this.request('POST', `/authentication?username=${username}`, { value: password })
+        .then(User.fromCrowd);
+    };
+
+    this.search = {
+      user: (restriction, expand = false, startIndex = 0, maxResults = 1000) => {
+        return this.request('GET', `/search?entity-type=user&restriction=${restriction}&start-index=${startIndex}&max-results=${maxResults}${expand ? '&expand=user' : ''}`)
+          .then(res => expand ? res.users.map(User.fromCrowd) : res.users.map(user => user.name));
+      },
+      group: (restriction, expand = false, startIndex = 0, maxResults = 1000) => {
+        return this.request('GET', `/search?entity-type=group&restriction=${restriction}&start-index=${startIndex}&max-results=${maxResults}${expand ? '&expand=group' : ''}`)
+          .then(res => expand ? res.groups.map(Group.fromCrowd) : res.groups.map(group => group.name));
+      }
+    };
   }
 }

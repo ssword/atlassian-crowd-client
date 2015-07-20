@@ -11,3 +11,7 @@ export function assertAsync(promise, assert) {
     });
   });
 }
+
+export function withoutPassword(user) {
+  return Object.assign({}, user, { password: undefined });
+}

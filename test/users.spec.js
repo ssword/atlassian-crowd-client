@@ -1,14 +1,10 @@
 import assert from 'assert';
-import { assertAsync } from './helpers/async';
+import { assertAsync, withoutPassword } from './helpers/helpers';
 import settings from './helpers/settings';
 import Crowd from '../src/client';
 import Attributes from '../src/models/attributes';
 import Group from '../src/models/group';
 import User from '../src/models/user';
-
-function withoutPassword(user) {
-  return Object.assign({}, user, { password: undefined });
-}
 
 describe('Crowd user resource', () => {
   let crowd = new Crowd(settings.crowd);
