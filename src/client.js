@@ -2,6 +2,7 @@ import CrowdApi from './api';
 import Attributes from './models/attributes';
 import Group from './models/group';
 import User from './models/user';
+import Session from './models/session';
 
 export default class CrowdClient extends CrowdApi {
   constructor(settings) {
@@ -168,6 +169,39 @@ export default class CrowdClient extends CrowdApi {
       group: (restriction, expand = false, startIndex = 0, maxResults = 1000) => {
         return this.request('GET', `/search?entity-type=group&restriction=${restriction}&start-index=${startIndex}&max-results=${maxResults}${expand ? '&expand=group' : ''}`)
           .then(res => expand ? res.groups.map(Group.fromCrowd) : res.groups.map(group => group.name));
+      }
+    };
+
+    this.session = {
+      getUser: (token) => {
+        return this.request('GET', `/session/${token}`)
+          .then(res => User.fromCrowd(res.user));
+      },
+      validate: (token, validationFactors = undefined) => {
+        return this.request('POST', `/session/${token}`, validationFactors ? validationFactors.toCrowd() : {})
+          .then(Session.fromCrowd);
+      },
+      create: (username, password, validationFactors = undefined, duration = undefined) => {
+        let payload = validationFactors ? {
+          username, password, 'validation-factors': validationFactors.toCrowd()
+        } : { username, password };
+        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
+        return this.request('POST', `/session?duration=${duration}`, payload)
+          .then(Session.fromCrowd);
+      },
+      createUnvalidated: (username, validationFactors = undefined, duration = undefined) => {
+        let payload = validationFactors ? {
+          username, 'validation-factors': validationFactors.toCrowd()
+        } : { username };
+        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
+        return this.request('POST', `/session?duration=${duration}&validate-password=false`, payload)
+          .then(Session.fromCrowd);
+      },
+      remove: (token) => {
+        return this.request('DELETE', `/session/${token}`);
+      },
+      removeAll: (username) => {
+        return this.request('DELETE', `/session?username=${username}`);
       }
     };
   }

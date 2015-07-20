@@ -3,7 +3,7 @@ import http from 'http';
 import https from 'https';
 
 export default class CrowdApi {
-  constructor({ baseUrl, application, debug = false }) {
+  constructor({ baseUrl, application, sessionTimeout = 600, debug = false }) {
     let uri = url.parse(baseUrl);
     this.settings = {
       protocol: uri.protocol,
@@ -11,7 +11,8 @@ export default class CrowdApi {
       basepath: uri.pathname + 'rest/usermanagement/1',
       credentials: application.name + ':' + application.password,
       port: uri.port || (uri.protocol === 'https:') ? 443 : 80,
-      debug: debug
+      sessionTimeout,
+      debug
     };
   }
 
