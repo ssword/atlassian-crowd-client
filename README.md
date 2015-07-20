@@ -8,22 +8,26 @@ Promise-based client library to communicate with an Atlassian Crowd server from 
 
 ## Usage
 
-    // Initialize the Crowd client:
-    var crowd = new CrowdApi({
-      baseUrl: 'https://crowd.example.com/',
-      application: {
-        name: 'demo',
-        password: 'example'
-      }
-    });
+```javascript
+var CrowdClient = require('atlassian-crowd-client');
 
-    // Authenticate to Crowd:
-    crowd.session.create(user.username, user.password).then(function (session) {
-      // Fetch the user profile:
-      crowd.session.getUser(session.token).then(function (user) {
-        console.log('Hello, ' + user.displayname);
-      });
-    });
+// Initialize the Crowd client:
+var crowd = new CrowdClient({
+  baseUrl: 'https://crowd.example.com/',
+  application: {
+    name: 'demo',
+    password: 'example'
+  }
+});
+
+// Authenticate to Crowd:
+crowd.session.create(user.username, user.password).then(function (session) {
+  // Fetch the user profile:
+  crowd.session.getUser(session.token).then(function (user) {
+    console.log('Hello, ' + user.displayname);
+  });
+});
+```
 
 ## Development
 
