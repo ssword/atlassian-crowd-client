@@ -152,9 +152,11 @@ export default class CrowdClient extends CrowdApi {
       }
     };
 
-    this.authenticate = (username, password) => {
-      return this.request('POST', `/authentication?username=${username}`, { value: password })
-        .then(User.fromCrowd);
+    this.authentication = {
+      authenticate: (username, password) => {
+        return this.request('POST', `/authentication?username=${username}`, { value: password })
+          .then(User.fromCrowd);
+      }
     };
 
     this.search = {

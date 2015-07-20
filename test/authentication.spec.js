@@ -17,7 +17,7 @@ describe('Crowd authentication resource', () => {
   });
 
   it('should allow authentication', (done) => {
-    assertAsync(crowd.authenticate(user.username, user.password), (res) => {
+    assertAsync(crowd.authentication.authenticate(user.username, user.password), (res) => {
       assert.deepEqual(res, withoutPassword(user));
     }).then(done, done);
   });
