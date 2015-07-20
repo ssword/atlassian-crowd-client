@@ -1,3 +1,5 @@
+import 'core-js/shim';
+
 import CrowdApi from './api';
 import Attributes from './models/attributes';
 import Group from './models/group';

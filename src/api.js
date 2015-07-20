@@ -1,3 +1,5 @@
+import 'core-js/shim';
+
 import url from 'url';
 import http from 'http';
 import https from 'https';
