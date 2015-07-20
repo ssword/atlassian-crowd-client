@@ -4,7 +4,7 @@
   "description": "Atlassian Crowd API client for Node",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.spec.js --no-colors --compilers js:babel/register --timeout 5000 --watch"
+    "test": "mocha test/*.spec.js --compilers js:babel/register --timeout 5000"
   },
   "author": "Gert Hengeveld",
   "license": "ISC",
