@@ -10,7 +10,7 @@ export default {
       password: 'example'                   // Crowd application password.
     },
     nesting: false,                         // Does your backend support nesting? OpenLDAP doesn't.
-    sessionTimeout: 60,                     // Session timeout in seconds.
+    sessionTimeout: 600,                    // Session timeout in seconds. Can never be more than the one configured in Crowd.
     debug: false                            // Enables verbose logging of requests and responses.
   }
 };
