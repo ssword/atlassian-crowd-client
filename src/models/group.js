@@ -1,5 +1,5 @@
 export default class Group {
-  constructor(groupname, description, active = true) {
+  constructor(groupname, description = '', active = true) {
     this.groupname = groupname;
     this.description = description;
     this.active = active;
