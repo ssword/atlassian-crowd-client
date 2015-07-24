@@ -47,7 +47,7 @@ export default class CrowdClient extends CrowdApi {
       update: (username, user) => {
         // Crowd returns a 204 No Content. Return the original object for consistency.
         return this.request('PUT', `/user?username=${username}`, user.toCrowd())
-          .then(() => User.fromCrowd(user.toCrowd()));
+          .then(() => this.user.get(username));
       },
 
       /**
@@ -211,9 +211,9 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise.<Group>} Resolves to the newly created group on success
        */
       create: (group) => {
-        // Crowd returns a 201 Created. Return the original object for consistency.
+        // Crowd returns a 201 Created. Fetch and return the created object for consistency.
         return this.request('POST', '/group', group.toCrowd())
-          .then(() => Group.fromCrowd(group.toCrowd()));
+          .then(() => this.group.get(group.groupname));
       },
 
       /**
