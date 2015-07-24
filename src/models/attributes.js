@@ -9,11 +9,15 @@ export default class Attributes {
     let attributesArr = [];
     for (var key in this.attributes) {
       if (this.attributes.hasOwnProperty(key)) {
-        let value = this.attributes[key];
-        attributesArr.push({
-          name: key,
-          values: [JSON.stringify(value)]
-        });
+        let jsonString = JSON.stringify(this.attributes[key]);
+        if (jsonString.length > 255) {
+          throw new Error(`Attribute ${key} is too large. Values can be no larger than 255 characters after JSON encoding.`);
+        } else {
+          attributesArr.push({
+            name: key,
+            values: [jsonString]
+          });
+        }
       }
     }
     return attributesArr;

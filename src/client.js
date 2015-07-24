@@ -80,9 +80,13 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<Attributes>} Resolves to the new set of attributes
          */
         set: (username, attributes) => {
-          return this.request('POST', `/user/attribute?username=${username}`, {
-            attributes: attributes.toCrowd()
-          }).then(() => Attributes.fromCrowd(attributes.toCrowd()));
+          try {
+            return this.request('POST', `/user/attribute?username=${username}`, {
+              attributes: attributes.toCrowd()
+            }).then(() => this.user.attributes.list(username));
+          } catch (e) {
+            return Promise.reject(e);
+          }
         },
 
         /**
@@ -254,9 +258,13 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<Attributes>} Resolves to the new set of attributes
          */
         set: (groupname, attributes) => {
-          return this.request('POST', `/group/attribute?groupname=${groupname}`, {
-            attributes: attributes.toCrowd()
-          }).then(() => Attributes.fromCrowd(attributes.toCrowd()));
+          try {
+            return this.request('POST', `/group/attribute?groupname=${groupname}`, {
+              attributes: attributes.toCrowd()
+            }).then(() => this.group.attributes.list(groupname));
+          } catch (e) {
+            return Promise.reject(e);
+          }
         },
 
         /**

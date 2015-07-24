@@ -86,6 +86,18 @@ describe('Crowd group resource', () => {
         assert.deepEqual(res, attributes);
       }).then(done).catch(done);
     });
+
+    it('should reject large attribute values', (done) => {
+      let largeAttributes = new Attributes({
+        foo: 'Aliquam laoreet ultricies neque, non sollicitudin diam euismod et. Suspendisse volutpat et velit quis scelerisque. Sed elit diam, accumsan ut facilisis id, gravida in justo. Maecenas dolor dolor, volutpat vel nunc eget, vehicula convallis lorem. Praelol',
+        bar: ['Aliquam laoreet ultricies neque, non sollicitudin diam euismod et. Suspendisse volutpat et velit quis scelerisque. Sed elit diam, accumsan ut facilisis id, gravida in justo. Maecenas dolor dolor, volutpat vel nunc eget, vehicula convallis lorem. Praesent aliquet, dui nec iaculis dignissim, sapien mauris sodales ex, ut tempus sem turpis sit amet sem.']
+      });
+
+      assertAsync(crowd.group.attributes.set(group.groupname, largeAttributes)).then(() => {}, (e) => {
+        assert.equal(e, 'Error: Attribute bar is too large. Values can be no larger than 255 characters after JSON encoding.');
+        done();
+      }).catch(done);
+    });
   });
 
   describe('users', () => {
