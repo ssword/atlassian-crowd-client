@@ -12,7 +12,7 @@ export default class CrowdApi {
       hostname: uri.hostname,
       basepath: uri.pathname + 'rest/usermanagement/1',
       credentials: application.name + ':' + application.password,
-      port: uri.port || (uri.protocol === 'https:') ? 443 : 80,
+      port: uri.port || (uri.protocol === 'https:' ? 443 : 80),
       sessionTimeout,
       debug
     };
