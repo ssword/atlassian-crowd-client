@@ -12,6 +12,6 @@ export function assertAsync(promise, assert) {
   });
 }
 
-export function withoutPassword(user) {
-  return Object.assign({}, user, { password: undefined });
+export function withoutPassword(user, attributes) {
+  return Object.assign({}, user, { password: undefined, attributes: attributes || [] });
 }

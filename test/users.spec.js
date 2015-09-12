@@ -31,8 +31,8 @@ describe('Crowd user resource', () => {
   });
 
   it('should allow fetching users', (done) => {
-    assertAsync(crowd.user.get(user.username), (res) => {
-      assert.deepEqual(res, withoutPassword(user));
+    assertAsync(crowd.user.get(user.username, true), (res) => {
+      assert.deepEqual(res, withoutPassword(user, res.attributes));
     }).then(done).catch(done);
   });
 
