@@ -31,7 +31,7 @@ describe('Crowd group resource', () => {
   });
 
   it('should allow fetching groups', (done) => {
-    assertAsync(crowd.group.get(group.groupname), (res) => {
+    assertAsync(crowd.group.get(group.groupname, true), (res) => {
       assert.deepEqual(res, group);
     }).then(done).catch(done);
   });
