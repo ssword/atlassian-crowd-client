@@ -8,7 +8,8 @@ describe('Crowd config resource', () => {
 
   it('should allow fetching cookie config', (done) => {
     assertAsync(crowd.config.cookie(), (res) => {
-      assert.deepEqual(res, { secure: false, name: 'crowd.token_key' });
+      assert.notStrictEqual(res.secure, undefined);
+      assert.notStrictEqual(res.name, undefined);
     }).then(done, done);
   });
 });

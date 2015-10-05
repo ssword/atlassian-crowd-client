@@ -1,5 +1,5 @@
 export default class User {
-  constructor(firstname, lastname, displayname, email, username, password = undefined, active = true) {
+  constructor(firstname, lastname, displayname, email, username, password = undefined, active = true, attributes) {
     this.firstname = firstname || '';
     this.lastname = lastname || '';
     this.displayname = displayname || '';
@@ -7,6 +7,7 @@ export default class User {
     this.username = username;
     this.password = password;
     this.active = active;
+    this.attributes = (attributes) ? attributes.attributes : [];
   }
 
   toCrowd() {
@@ -24,7 +25,7 @@ export default class User {
     return obj;
   }
 
-  static fromCrowd({ name, active, 'first-name': firstname, 'last-name': lastname, 'display-name': displayname, email }) { //eslint-disable-line no-dupe-args
-    return new User(firstname, lastname, displayname, email, name, undefined, active);
+  static fromCrowd({ name, active, 'first-name': firstname, 'last-name': lastname, 'display-name': displayname, email, attributes}) { //eslint-disable-line no-dupe-args
+    return new User(firstname, lastname, displayname, email, name, undefined, active, attributes);
   }
 }

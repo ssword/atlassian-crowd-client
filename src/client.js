@@ -585,5 +585,28 @@ export default class CrowdClient extends CrowdApi {
        */
       cookie: () => this.request('GET', '/config/cookie')
     };
+
+
+    /**
+     * User Model
+     */
+    this.userModel = User,
+
+    /**
+      * Attributes Model
+      */
+    this.attributesModel = Attributes,
+
+
+    /**
+     * Attributes Model
+     */
+    this.groupModel = Group,
+
+    /**
+     * Session Model
+     */
+    this.sessionModel = Session
+
   }
 }

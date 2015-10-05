@@ -31,8 +31,8 @@ describe('Crowd user resource', () => {
   });
 
   it('should allow fetching users', (done) => {
-    assertAsync(crowd.user.get(user.username), (res) => {
-      assert.deepEqual(res, withoutPassword(user));
+    assertAsync(crowd.user.get(user.username, true), (res) => {
+      assert.deepEqual(res, withoutPassword(user, res.attributes));
     }).then(done).catch(done);
   });
 
@@ -73,17 +73,24 @@ describe('Crowd user resource', () => {
       });
 
       assertAsync(crowd.user.attributes.set(user.username, newAttributes), (res) => {
-        assert.deepEqual(res, newAttributes);
+        assert.deepEqual(res.foo, newAttributes.foo);
+        assert.deepEqual(res.bar, newAttributes.bar);
+        assert.deepEqual(res.obj, newAttributes.obj);
 
         return assertAsync(crowd.user.attributes.list(user.username), (res2) => {
-          assert.deepEqual(res2, newAttributes);
+          assert.deepEqual(res2.foo, newAttributes.foo);
+          assert.deepEqual(res2.bar, newAttributes.bar);
+          assert.deepEqual(res2.obj, newAttributes.obj);
+
         });
       }).then(done).catch(done);
     });
 
     it('should allow listing attributes', (done) => {
       assertAsync(crowd.user.attributes.list(user.username), (res) => {
-        assert.deepEqual(res, attributes);
+        assert.deepEqual(res.foo, attributes.foo);
+        assert.deepEqual(res.bar, attributes.bar);
+        assert.deepEqual(res.obj, attributes.obj);
       }).then(done).catch(done);
     });
   });

@@ -1,8 +1,9 @@
 export default class Group {
-  constructor(groupname, description = '', active = true) {
+  constructor(groupname, description = '', active = true, attributes) {
     this.groupname = groupname;
     this.description = description;
     this.active = active;
+    this.attributes = (attributes) ? attributes.attributes : [];
   }
 
   toCrowd() {
@@ -15,7 +16,7 @@ export default class Group {
     return obj;
   }
 
-  static fromCrowd({ name, description, active }) {
+  static fromCrowd({ name, description, active, attributes}) {
     return new Group(name, description, active);
   }
 }
