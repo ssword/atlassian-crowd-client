@@ -37,7 +37,7 @@ export default class CrowdApi {
       case 'PUT':
       case 'DELETE':
         data = JSON.stringify(data) || '';
-        opts.headers['Content-Type'] = 'application/json; content-type: utf-8';
+        opts.headers['Content-Type'] = 'application/json; charset=utf-8';
         opts.headers['Content-Length'] = Buffer.byteLength(data,'utf8');
         break;
     }
