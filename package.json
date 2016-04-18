@@ -1,6 +1,6 @@
 {
   "name": "atlassian-crowd-client",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Atlassian Crowd API client for Node",
   "author": "Gert Hengeveld",
   "scripts": {
