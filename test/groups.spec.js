@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { assertAsync } from './helpers/helpers';
+import { assertAsync, withoutPassword } from './helpers/helpers';
 import settings from './helpers/settings';
 import Crowd from '../src/client';
 import Attributes from '../src/models/attributes';
@@ -142,6 +142,12 @@ describe('Crowd group resource', () => {
     it('should allow listing group member usernames', (done) => {
       assertAsync(crowd.group.users.list(group.groupname), (res) => {
         assert.deepEqual(res, [user1.username, user2.username]);
+      }).then(done).catch(done);
+    });
+
+    it('should allow listing group member User objects', (done) => {
+      assertAsync(crowd.group.users.list(group.groupname, false, 0, 1000, true), (res) => {
+        assert.deepEqual(res, [withoutPassword(user1), withoutPassword(user2)]);
       }).then(done).catch(done);
     });
 

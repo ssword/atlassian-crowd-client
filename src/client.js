@@ -300,11 +300,12 @@ export default class CrowdClient extends CrowdApi {
          * @param {boolean=false} nested - Return nested groups
          * @param {number=0} startIndex - Index to start iterating from
          * @param {number=1000} maxResults - Maximum number of results
-         * @return {Promise.<string[]>} Resolves to a list of usernames on success
+         * @param {boolean=false} expand - Expand users to objects
+         * @return {(Promise.<string[]>|Promise.<User[]>} Resolves to a list of usernames or user objects on success
          */
-        list: (groupname, nested = false, startIndex = 0, maxResults = 1000) => {
-          return this.request('GET', `/group/user/${nested ? 'nested' : 'direct'}?groupname=${groupname}&start-index=${startIndex}&max-results=${maxResults}`)
-            .then(res => res.users.map(user => user.name));
+        list: (groupname, nested = false, startIndex = 0, maxResults = 1000, expand = false) => {
+          return this.request('GET', `/group/user/${nested ? 'nested' : 'direct'}?groupname=${groupname}&start-index=${startIndex}&max-results=${maxResults}&expand=${expand ? 'user' : 'none'}`)
+              .then(res => res.users.map(user => expand ? User.fromCrowd(user) : user.name));
         },
 
         /**
