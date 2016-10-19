@@ -17,6 +17,6 @@ export default class Group {
   }
 
   static fromCrowd({ name, description, active, attributes}) {
-    return new Group(name, description, active);
+    return new Group(name, description, active, attributes);
   }
 }
