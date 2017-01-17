@@ -100,7 +100,7 @@ export default class CrowdApi {
 
       request.on('error', (e) => {
         console.log('Error sending request: ' + e.message);
-        reject(error);
+        reject(e);
       });
 
       if (data) {
