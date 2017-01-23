@@ -57,8 +57,8 @@ export default class CrowdClient extends CrowdApi {
        * @param {string} newname - New name
        * @return {Promise} Resolves to nothing
        */
-      rename: function rename(oldname, newname) {
-        return _this.request('POST', '/user/rename?username=' + oldname, { "new-name": newname});
+      rename: (oldname, newname) => {
+        return this.request('POST', `/user/rename?username=${oldname}`, { "new-name": newname });
       },
 
       /**
