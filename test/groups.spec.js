@@ -87,6 +87,13 @@ describe('Crowd group resource', () => {
       }).then(done).catch(done);
     });
 
+    it('should allow for the return of attributes when group withAttributes value is set to true', (done) => {
+      var withAttributes = true;
+      assertAsync(crowd.group.get(group.groupname, withAttributes), (res) => {
+        assert.deepEqual(Attributes.fromCrowd(res.attributes), attributes);
+      }).then(done).catch(done);
+    });
+
     it('should reject large attribute values', (done) => {
       let largeAttributes = new Attributes({
         foo: 'Aliquam laoreet ultricies neque, non sollicitudin diam euismod et. Suspendisse volutpat et velit quis scelerisque. Sed elit diam, accumsan ut facilisis id, gravida in justo. Maecenas dolor dolor, volutpat vel nunc eget, vehicula convallis lorem. Praelol',
