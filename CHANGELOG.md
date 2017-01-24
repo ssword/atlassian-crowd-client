@@ -1,7 +1,13 @@
 # Change Log
 
-## Unreleased
-Nothing right now.
+## 1.4.0 (2017-01-24)
+Thanks to taciturnip, Kaman Wu and Leonardo Lewandowski for their PRs.
+### Added
+- Added user rename method
+### Changed
+- Pass group attributes when fetching it from Crowd
+### Fixed
+- Fixed a typo causing request error in promise rejection to always be undefined
 
 ## 1.3.0 (2016-04-18)
 Thanks to Philipp Fahrenschon for his [PR](https://github.com/wehkamp/atlassian-crowd-client/pull/4).
