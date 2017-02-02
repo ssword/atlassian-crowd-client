@@ -22,6 +22,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise.<User>} Resolves to the found user on success
        */
       get: (username, withAttributes = false) => {
+        username = encodeURIComponent(username);
         return this.request('GET', `/user?username=${username}${withAttributes ? '&expand=attributes' : ''}`)
           .then(User.fromCrowd);
       },
@@ -46,6 +47,7 @@ export default class CrowdClient extends CrowdApi {
        */
       update: (username, user) => {
         // Crowd returns a 204 No Content. Return the original object for consistency.
+        username = encodeURIComponent(username);
         return this.request('PUT', `/user?username=${username}`, user.toCrowd())
           .then(() => this.user.get(username));
       },
@@ -58,6 +60,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise} Resolves to nothing
        */
       rename: (oldname, newname) => {
+        oldname = encodeURIComponent(oldname);
         return this.request('POST', `/user/rename?username=${oldname}`, { "new-name": newname });
       },
 
@@ -68,6 +71,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise} Resolves to nothing
        */
       remove: (username) => {
+        username = encodeURIComponent(username);
         return this.request('DELETE', `/user?username=${username}`);
       },
 
@@ -79,6 +83,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<Attributes>} Resolves to a set of attributes
          */
         list: (username) => {
+          username = encodeURIComponent(username);
           return this.request('GET', `/user/attribute?username=${username}`)
             .then((res) => Attributes.fromCrowd(res.attributes));
         },
@@ -92,6 +97,7 @@ export default class CrowdClient extends CrowdApi {
          */
         set: (username, attributes) => {
           try {
+            username = encodeURIComponent(username);
             return this.request('POST', `/user/attribute?username=${username}`, {
               attributes: attributes.toCrowd()
             }).then(() => this.user.attributes.list(username));
@@ -108,6 +114,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         remove: (username, attributename) => {
+          username = encodeURIComponent(username);
+          attributename = encodeURIComponent(attributename);
           return this.request('DELETE', `/user/attribute?username=${username}&attributename=${attributename}`);
         }
       },
@@ -121,6 +129,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         set: (username, password) => {
+          username = encodeURIComponent(username);
           return this.request('PUT', `/user/password?username=${username}`, { value: password });
         },
 
@@ -131,6 +140,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         reset: (username) => {
+          username = encodeURIComponent(username);
           return this.request('POST', `/user/mail/password?username=${username}`);
         }
       },
@@ -157,6 +167,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string>} Resolves to the group name on success
          */
         get: (username, groupname, nested = false) => {
+          username = encodeURIComponent(username);
+          groupname = encodeURIComponent(groupname);
           return this.request('GET', `/user/group/${nested ? 'nested' : 'direct'}?username=${username}&groupname=${groupname}`)
             .then(res => res.name);
         },
@@ -171,6 +183,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string[]>} Resolves to a list of group names on success
          */
         list: (username, nested = false, startIndex = 0, maxResults = 1000) => {
+          username = encodeURIComponent(username);
           return this.request('GET', `/user/group/${nested ? 'nested' : 'direct'}?username=${username}&start-index=${startIndex}&max-results=${maxResults}`)
             .then(res => res.groups.map(group => group.name));
         },
@@ -183,6 +196,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         add: (username, groupname) => {
+          username = encodeURIComponent(username);
           return this.request('POST', `/user/group/direct?username=${username}`, { name: groupname });
         },
 
@@ -194,6 +208,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         remove: (username, groupname) => {
+          username = encodeURIComponent(username);
+          groupname = encodeURIComponent(groupname);
           return this.request('DELETE', `/user/group/direct?username=${username}&groupname=${groupname}`);
         }
       }
@@ -211,6 +227,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise.<Group>} Resolves to the found group on success
        */
       get: (groupname, withAttributes = false) => {
+        groupname = encodeURIComponent(groupname);
         return this.request('GET', `/group?groupname=${groupname}${withAttributes ? '&expand=attributes' : ''}`)
           .then(Group.fromCrowd);
       },
@@ -235,6 +252,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise.<Group>} Resolves to the updated group on success
        */
       update: (groupname, group) => {
+        groupname = encodeURIComponent(groupname);
         return this.request('PUT', `/group?groupname=${groupname}`, group.toCrowd())
           .then(Group.fromCrowd);
       },
@@ -246,6 +264,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise} Resolves to nothing
        */
       remove: (groupname) => {
+        groupname = encodeURIComponent(groupname);
         return this.request('DELETE', `/group?groupname=${groupname}`);
       },
 
@@ -257,6 +276,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<Attributes>} Resolves to a set of group attributes on success
          */
         list: (groupname) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('GET', `/group/attribute?groupname=${groupname}`)
             .then((res) => Attributes.fromCrowd(res.attributes));
         },
@@ -270,6 +290,7 @@ export default class CrowdClient extends CrowdApi {
          */
         set: (groupname, attributes) => {
           try {
+            groupname = encodeURIComponent(groupname);
             return this.request('POST', `/group/attribute?groupname=${groupname}`, {
               attributes: attributes.toCrowd()
             }).then(() => this.group.attributes.list(groupname));
@@ -286,6 +307,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         remove: (groupname, attributename) => {
+          groupname = encodeURIComponent(groupname);
+          attributename = encodeURIComponent(attributename);
           return this.request('DELETE', `/group/attribute?groupname=${groupname}&attributename=${attributename}`);
         }
       },
@@ -300,6 +323,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string>} Resolves to the username on success
          */
         get: (groupname, username, nested = false) => {
+          groupname = encodeURIComponent(groupname);
+          username = encodeURIComponent(username);
           return this.request('GET', `/group/user/${nested ? 'nested' : 'direct'}?groupname=${groupname}&username=${username}`)
             .then(res => res.name);
         },
@@ -315,6 +340,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {(Promise.<string[]>|Promise.<User[]>} Resolves to a list of usernames or user objects on success
          */
         list: (groupname, nested = false, startIndex = 0, maxResults = 1000, expand = false) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('GET', `/group/user/${nested ? 'nested' : 'direct'}?groupname=${groupname}&start-index=${startIndex}&max-results=${maxResults}&expand=${expand ? 'user' : 'none'}`)
               .then(res => res.users.map(user => expand ? User.fromCrowd(user) : user.name));
         },
@@ -327,6 +353,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         add: (groupname, username) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('POST', `/group/user/direct?groupname=${groupname}`, { name: username });
         },
 
@@ -338,6 +365,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         remove: (groupname, username) => {
+          groupname = encodeURIComponent(groupname);
+          username = encodeURIComponent(username);
           return this.request('DELETE', `/group/user/direct?groupname=${groupname}&username=${username}`);
         }
       },
@@ -355,6 +384,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string>} Resolves to the parent group name on success
          */
         get: (groupname, parentname, nested = false) => {
+          groupname = encodeURIComponent(groupname);
+          parentname = encodeURIComponent(parentname);
           return this.request('GET', `/group/parent-group/${nested ? 'nested' : 'direct'}?groupname=${groupname}&parent-groupname=${parentname}`)
             .then(res => res.name);
         },
@@ -370,6 +401,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string[]>} Resolves to a list of parent group names on success
          */
         list: (groupname, nested = false, startIndex = 0, maxResults = 1000) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('GET', `/group/parent-group/${nested ? 'nested' : 'direct'}?groupname=${groupname}&start-index=${startIndex}&max-results=${maxResults}`)
             .then(res => res.groups.map(group => group.name));
         },
@@ -382,6 +414,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         add: (groupname, parentname) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('POST', `/group/parent-group/direct?groupname=${groupname}`, { name: parentname });
         }
       },
@@ -395,6 +428,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string>} Resolves to the child group name on success
          */
         get: (groupname, childname, nested = false) => {
+          groupname = encodeURIComponent(groupname);
+          childname = encodeURIComponent(childname);
           return this.request('GET', `/group/child-group/${nested ? 'nested' : 'direct'}?groupname=${groupname}&child-groupname=${childname}`);
         },
 
@@ -409,6 +444,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise.<string[]>} Resolves to a list of child group names on success
          */
         list: (groupname, nested = false, startIndex = 0, maxResults = 1000) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('GET', `/group/child-group/${nested ? 'nested' : 'direct'}?groupname=${groupname}&start-index=${startIndex}&max-results=${maxResults}`)
             .then(res => res.groups.map(group => group.name));
         },
@@ -421,6 +457,7 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         add: (groupname, childname) => {
+          groupname = encodeURIComponent(groupname);
           return this.request('POST', `/group/child-group/direct?groupname=${groupname}`, { name: childname });
         },
 
@@ -432,6 +469,8 @@ export default class CrowdClient extends CrowdApi {
          * @return {Promise} Resolves to nothing
          */
         remove: (groupname, childname) => {
+          groupname = encodeURIComponent(groupname);
+          childname = encodeURIComponent(childname);
           return this.request('DELETE', `/group/child-group/direct?groupname=${groupname}&child-groupname=${childname}`);
         }
       },
@@ -459,6 +498,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise.<User>} Resolves to the authenticated user on success
        */
       authenticate: (username, password) => {
+        username = encodeURIComponent(username);
         return this.request('POST', `/authentication?username=${username}`, { value: password })
           .then(User.fromCrowd);
       }
@@ -478,6 +518,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {(Promise.<string[]>|Promise.<User[]>} Resolves to a list of usernames or user objects which match the restriction
        */
       user: (restriction, expand = false, startIndex = 0, maxResults = 1000) => {
+        restriction = encodeURIComponent(restriction);
         return this.request('GET', `/search?entity-type=user&restriction=${restriction}&start-index=${startIndex}&max-results=${maxResults}${expand ? '&expand=user' : ''}`)
           .then(res => expand ? res.users.map(User.fromCrowd) : res.users.map(user => user.name));
       },
@@ -492,6 +533,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {(Promise.<string[]>|Promise.<Group[]>} Resolves to a list of group names or group objects which match the restriction
        */
       group: (restriction, expand = false, startIndex = 0, maxResults = 1000) => {
+        restriction = encodeURIComponent(restriction);
         return this.request('GET', `/search?entity-type=group&restriction=${restriction}&start-index=${startIndex}&max-results=${maxResults}${expand ? '&expand=group' : ''}`)
           .then(res => expand ? res.groups.map(Group.fromCrowd) : res.groups.map(group => group.name));
       }
@@ -581,6 +623,7 @@ export default class CrowdClient extends CrowdApi {
        * @return {Promise} Resolves to nothing
        */
       removeAll: (username, exclude = undefined) => {
+        username = encodeURIComponent(username);
         return this.request('DELETE', `/session?username=${username}${exclude ? '&exclude=' + exclude : ''}`);
       }
     };
