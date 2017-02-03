@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.4.1 (2017-02-04)
+Thanks to Ryan Blace for his bugfix.
+### Fixed
+- Encode query parameters in request URLs
+
 ## 1.4.0 (2017-01-24)
 Thanks to taciturnip, Kaman Wu and Leonardo Lewandowski for their PRs.
 ### Added
