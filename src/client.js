@@ -47,8 +47,7 @@ export default class CrowdClient extends CrowdApi {
        */
       update: (username, user) => {
         // Crowd returns a 204 No Content. Return the original object for consistency.
-        username = encodeURIComponent(username);
-        return this.request('PUT', `/user?username=${username}`, user.toCrowd())
+        return this.request('PUT', `/user?username=${encodeURIComponent(username)}`, user.toCrowd())
           .then(() => this.user.get(username));
       },
 
@@ -97,8 +96,7 @@ export default class CrowdClient extends CrowdApi {
          */
         set: (username, attributes) => {
           try {
-            username = encodeURIComponent(username);
-            return this.request('POST', `/user/attribute?username=${username}`, {
+            return this.request('POST', `/user/attribute?username=${encodeURIComponent(username)}`, {
               attributes: attributes.toCrowd()
             }).then(() => this.user.attributes.list(username));
           } catch (e) {
@@ -290,8 +288,7 @@ export default class CrowdClient extends CrowdApi {
          */
         set: (groupname, attributes) => {
           try {
-            groupname = encodeURIComponent(groupname);
-            return this.request('POST', `/group/attribute?groupname=${groupname}`, {
+            return this.request('POST', `/group/attribute?groupname=${encodeURIComponent(groupname)}`, {
               attributes: attributes.toCrowd()
             }).then(() => this.group.attributes.list(groupname));
           } catch (e) {
