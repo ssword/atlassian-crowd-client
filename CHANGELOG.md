@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.2 (2017-03-30)
+Thanks to kamanwu-oicr, Filip Bednárik and Ryan Blace for reporting and fixing the issues.
+### Fixed
+- Fixed duplicate url parameter encoding
+- Support for charset in response content type header
+
 ## 1.4.1 (2017-02-04)
 Thanks to Ryan Blace for his bugfix.
 ### Fixed
