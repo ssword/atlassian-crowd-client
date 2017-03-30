@@ -75,7 +75,7 @@ export default class CrowdApi {
           if (path === '/group/membership' && response.statusCode === 200 && responseData) {
             // Return the raw XML response for /group/membership, since it doesn't support JSON.
             resolve(responseData);
-          } else if (!response.headers['content-type'] || !response.headers['content-type'].startsWith("application/json")) {
+          } else if (!response.headers['content-type'] || response.headers['content-type'].split(';')[0] !== 'application/json') {
             error = new Error('Invalid Response from Crowd, expecting JSON.');
             error.type = 'INVALID_RESPONSE';
             reject(error);
