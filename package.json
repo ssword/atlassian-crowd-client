@@ -11,12 +11,12 @@
   "main": "lib/client.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wehkamp/atlassian-crowd-client"
+    "url": "https://github.com/ghengeveld/atlassian-crowd-client"
   },
   "bugs": {
-    "url": "https://github.com/wehkamp/atlassian-crowd-client/issues"
+    "url": "https://github.com/ghengeveld/atlassian-crowd-client/issues"
   },
-  "homepage": "https://github.com/wehkamp/atlassian-crowd-client",
+  "homepage": "https://github.com/ghengeveld/atlassian-crowd-client",
   "keywords": [
     "atlassian",
     "crowd",
