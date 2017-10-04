@@ -6,7 +6,7 @@ import https from 'https';
 
 export default class CrowdApi {
   constructor({ baseUrl, application, sessionTimeout = 600, debug = false }) {
-    let uri = url.parse(baseUrl);
+    let uri = url.parse(baseUrl.endsWith('/') ? baseUrl : baseUrl += '/');
     this.settings = {
       protocol: uri.protocol,
       hostname: uri.hostname,
