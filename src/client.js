@@ -8,6 +8,7 @@ import Session from './models/session';
 
 export default class CrowdClient extends CrowdApi {
   constructor(settings) {
+    // Refer to `test/helpers/settings-example.js` for configurable settings.
     super(settings);
 
     /**
@@ -24,6 +25,12 @@ export default class CrowdClient extends CrowdApi {
       get: (username, withAttributes = false) => {
         username = encodeURIComponent(username);
         return this.request('GET', `/user?username=${username}${withAttributes ? '&expand=attributes' : ''}`)
+          .then(data => {
+            if (withAttributes) {
+              data.attributes = Attributes.fromCrowd(data.attributes, this.settings.attributesParser);
+            }
+            return data;
+          })
           .then(User.fromCrowd);
       },
 
@@ -60,7 +67,7 @@ export default class CrowdClient extends CrowdApi {
        */
       rename: (oldname, newname) => {
         oldname = encodeURIComponent(oldname);
-        return this.request('POST', `/user/rename?username=${oldname}`, { "new-name": newname });
+        return this.request('POST', `/user/rename?username=${oldname}`, { 'new-name': newname });
       },
 
       /**
@@ -84,7 +91,7 @@ export default class CrowdClient extends CrowdApi {
         list: (username) => {
           username = encodeURIComponent(username);
           return this.request('GET', `/user/attribute?username=${username}`)
-            .then((res) => Attributes.fromCrowd(res.attributes));
+            .then(res => Attributes.fromCrowd(res.attributes, this.settings.attributesParser));
         },
 
         /**
@@ -97,7 +104,7 @@ export default class CrowdClient extends CrowdApi {
         set: (username, attributes) => {
           try {
             return this.request('POST', `/user/attribute?username=${encodeURIComponent(username)}`, {
-              attributes: attributes.toCrowd()
+              attributes: attributes.toCrowd(this.settings.attributesEncoder)
             }).then(() => this.user.attributes.list(username));
           } catch (e) {
             return Promise.reject(e);
@@ -276,7 +283,7 @@ export default class CrowdClient extends CrowdApi {
         list: (groupname) => {
           groupname = encodeURIComponent(groupname);
           return this.request('GET', `/group/attribute?groupname=${groupname}`)
-            .then((res) => Attributes.fromCrowd(res.attributes));
+            .then(res => Attributes.fromCrowd(res.attributes, this.settings.attributesParser));
         },
 
         /**
@@ -289,7 +296,7 @@ export default class CrowdClient extends CrowdApi {
         set: (groupname, attributes) => {
           try {
             return this.request('POST', `/group/attribute?groupname=${encodeURIComponent(groupname)}`, {
-              attributes: attributes.toCrowd()
+              attributes: attributes.toCrowd(this.settings.attributesEncoder)
             }).then(() => this.group.attributes.list(groupname));
           } catch (e) {
             return Promise.reject(e);
@@ -578,7 +585,7 @@ export default class CrowdClient extends CrowdApi {
         let payload = validationFactors ? {
           username, password, 'validation-factors': validationFactors.toCrowd()
         } : { username, password };
-        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
+        duration = parseInt(duration || this.settings.crowd.sessionTimeout) || 600;
         return this.request('POST', `/session?duration=${duration}`, payload)
           .then(Session.fromCrowd);
       },
@@ -597,7 +604,7 @@ export default class CrowdClient extends CrowdApi {
         let payload = validationFactors ? {
           username, 'validation-factors': validationFactors.toCrowd()
         } : { username };
-        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
+        duration = parseInt(duration || this.settings.crowd.sessionTimeout) || 600;
         return this.request('POST', `/session?duration=${duration}&validate-password=false`, payload)
           .then(Session.fromCrowd);
       },
