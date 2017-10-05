@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.5.0 (2017-10-05)
+Thanks to Alex Ashley for the suggestion.
+### Added
+- Added configurable attributesEncoder/attributesParser as alternative to JSON stringify/parse
+### Fixed
+- Fixed `crowd.sessionTimeout` setting
+
 ## 1.4.2 (2017-03-30)
 Thanks to kamanwu-oicr, Filip Bednárik and Ryan Blace for reporting and fixing the issues.
 ### Fixed
