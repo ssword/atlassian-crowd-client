@@ -1,4 +1,4 @@
-import assert from 'assert';;
+import assert from 'assert';
 import Crowd from '../src/client';
 import settings from './helpers/settings';
 import Attributes from '../src/models/attributes';
