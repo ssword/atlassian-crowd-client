@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.5.1 (2017-10-06)
+Thanks to kamanwu-oicr for the bug report.
+### Fixed
+- Rolled back the attributes mapping on User, since this was a breaking change. Will be back in v2.
+
 ## 1.5.0 (2017-10-05)
 Thanks to Alex Ashley for the suggestion.
 ### Added
