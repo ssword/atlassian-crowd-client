@@ -25,12 +25,6 @@ export default class CrowdClient extends CrowdApi {
       get: (username, withAttributes = false) => {
         username = encodeURIComponent(username);
         return this.request('GET', `/user?username=${username}${withAttributes ? '&expand=attributes' : ''}`)
-          .then(data => {
-            if (withAttributes) {
-              data.attributes = Attributes.fromCrowd(data.attributes, this.settings.attributesParser);
-            }
-            return data;
-          })
           .then(User.fromCrowd);
       },
 
