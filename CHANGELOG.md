@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.0 (2017-10-06)
+Thanks to Alex Ashley for the original PR.
+### Breaking
+- Changed attributes property on User responses, it is now mapped to an Attributes model.
+- Flattened settings object. Update your settings.js accordingly.
+### Fixed
+- `attributesParser` and `attributesEncoder` settings are now properly passed along.
+
 ## 1.5.1 (2017-10-06)
 Thanks to kamanwu-oicr for the bug report.
 ### Fixed
