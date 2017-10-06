@@ -1,13 +1,13 @@
 import assert from 'assert';
-import { assertAsync, withoutPassword } from './helpers/helpers';
-import settings from './helpers/settings';
-import Crowd from '../src/client';
-import Attributes from '../src/models/attributes';
-import Group from '../src/models/group';
-import User from '../src/models/user';
+import { assertAsync, withoutPassword } from '../helpers/helpers';
+import settings from '../helpers/settings';
+import CrowdClient from '../../src/client';
+import Attributes from '../../src/models/attributes';
+import Group from '../../src/models/group';
+import User from '../../src/models/user';
 
 describe('Crowd user resource', () => {
-  let crowd = new Crowd(settings.crowd);
+  let crowd = new CrowdClient(settings);
   let user = new User('Foo', 'Test', 'Test User', 'test@example.com', 'test1', 'test');
 
   beforeEach((done) => {

@@ -1,13 +1,13 @@
 import assert from 'assert';
-import { assertAsync, withoutPassword } from './helpers/helpers';
-import settings from './helpers/settings';
-import Crowd from '../src/client';
-import Attributes from '../src/models/attributes';
-import Group from '../src/models/group';
-import User from '../src/models/user';
+import { assertAsync, withoutPassword } from '../helpers/helpers';
+import settings from '../helpers/settings';
+import CrowdClient from '../../src/client';
+import Attributes from '../../src/models/attributes';
+import Group from '../../src/models/group';
+import User from '../../src/models/user';
 
 describe('Crowd group resource', () => {
-  let crowd = new Crowd(settings.crowd);
+  let crowd = new CrowdClient(settings);
   let group = new Group('testgroup1', 'Test group');
 
   beforeEach((done) => {
@@ -169,7 +169,7 @@ describe('Crowd group resource', () => {
   });
 
   describe('parents', () => {
-    if (!settings.crowd.nesting) {
+    if (!settings.nesting) {
       return;
     }
 
@@ -206,7 +206,7 @@ describe('Crowd group resource', () => {
   });
 
   describe('children', () => {
-    if (!settings.crowd.nesting) {
+    if (!settings.nesting) {
       return;
     }
 

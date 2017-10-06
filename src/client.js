@@ -25,6 +25,12 @@ export default class CrowdClient extends CrowdApi {
       get: (username, withAttributes = false) => {
         username = encodeURIComponent(username);
         return this.request('GET', `/user?username=${username}${withAttributes ? '&expand=attributes' : ''}`)
+          .then(data => {
+            if (withAttributes) {
+              data.attributes = Attributes.fromCrowd(data.attributes.attributes, this.settings.attributesParser);
+            }
+            return data;
+          })
           .then(User.fromCrowd);
       },
 
@@ -371,7 +377,7 @@ export default class CrowdClient extends CrowdApi {
 
       // NOTE:
       // Nested groups are not supported in all directory implementations (e.g. OpenLDAP).
-      // This functionality can be enabled using the `settings.crowd.nesting` option.
+      // This functionality can be enabled using the `settings.nesting` option.
       parents: {
         /**
          * Retrieves the group that is a direct parent of the specified group.
@@ -579,7 +585,7 @@ export default class CrowdClient extends CrowdApi {
         let payload = validationFactors ? {
           username, password, 'validation-factors': validationFactors.toCrowd()
         } : { username, password };
-        duration = parseInt(duration || this.settings.crowd.sessionTimeout) || 600;
+        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
         return this.request('POST', `/session?duration=${duration}`, payload)
           .then(Session.fromCrowd);
       },
@@ -598,7 +604,7 @@ export default class CrowdClient extends CrowdApi {
         let payload = validationFactors ? {
           username, 'validation-factors': validationFactors.toCrowd()
         } : { username };
-        duration = parseInt(duration || this.settings.crowd.sessionTimeout) || 600;
+        duration = parseInt(duration || this.settings.sessionTimeout) || 600;
         return this.request('POST', `/session?duration=${duration}&validate-password=false`, payload)
           .then(Session.fromCrowd);
       },

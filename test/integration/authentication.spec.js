@@ -1,11 +1,11 @@
 import assert from 'assert';
-import { assertAsync, withoutPassword } from './helpers/helpers';
-import settings from './helpers/settings';
-import Crowd from '../src/client';
-import User from '../src/models/user';
+import { assertAsync, withoutPassword } from '../helpers/helpers';
+import settings from '../helpers/settings';
+import CrowdClient from '../../src/client';
+import User from '../../src/models/user';
 
 describe('Crowd authentication resource', () => {
-  let crowd = new Crowd(settings.crowd);
+  let crowd = new CrowdClient(settings);
   let user = new User('Foo', 'Test', 'Test User', 'test@example.com', 'test1', 'test');
 
   beforeEach((done) => {

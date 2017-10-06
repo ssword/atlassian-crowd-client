@@ -5,17 +5,22 @@ import http from 'http';
 import https from 'https';
 
 export default class CrowdApi {
-  constructor({ baseUrl, application, sessionTimeout = 600, debug = false }) {
-    let uri = url.parse(baseUrl.endsWith('/') ? baseUrl : baseUrl += '/');
-    this.settings = {
+  constructor(settings) {
+    const uri = url.parse(settings.baseUrl.endsWith('/') ? settings.baseUrl : settings.baseUrl += '/');
+    const defaults = {
+      nesting: false,
+      sessionTimeout: 600,
+      debug: false,
+      attributesParser: JSON.parse,
+      attributesEncoder: JSON.stringify
+    };
+    this.settings = Object.assign({}, defaults, settings, {
       protocol: uri.protocol,
       hostname: uri.hostname,
       basepath: uri.pathname + 'rest/usermanagement/1',
-      credentials: application.name + ':' + application.password,
-      port: uri.port || (uri.protocol === 'https:' ? 443 : 80),
-      sessionTimeout,
-      debug
-    };
+      credentials: settings.application.name + ':' + settings.application.password,
+      port: uri.port || (uri.protocol === 'https:' ? 443 : 80)
+    });
   }
 
   request(method, path, data = undefined) {
