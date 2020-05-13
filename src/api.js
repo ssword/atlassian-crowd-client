@@ -17,7 +17,7 @@ export default class CrowdApi {
     this.settings = Object.assign({}, defaults, settings, {
       protocol: uri.protocol,
       hostname: uri.hostname,
-      basepath: uri.pathname + 'rest/usermanagement/1',
+      basepath: uri.pathname + 'rest/usermanagement/1/authentication',
       credentials: settings.application.name + ':' + settings.application.password,
       port: uri.port || (uri.protocol === 'https:' ? 443 : 80)
     });
